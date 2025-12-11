@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Inversión - COOPEXPRESS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #3c4f5e;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            max-width: 650px;
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #d2de1f;
+            color: #2d3e50;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            color: #2d3e50;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .disclaimer {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .form-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2d3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .input-group {
+            margin-bottom: 18px;
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 15px 15px 15px 50px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s;
+            background: white;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        input:disabled, select:disabled {
+            background: #f0f0f0;
+            cursor: not-allowed;
+        }
+        
+        input[readonly] {
+            background: #f9f9f9;
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .btn-calculate {
+            width: 100%;
+            padding: 16px;
+            background: #3c4f5e;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(60, 79, 94, 0.3);
+        }
+        
+        .btn-calculate:active {
+            transform: translateY(0);
+        }
+        
+        .result-section {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #d2de1f 0%, #c5d11f 100%);
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .result-label {
+            font-size: 14px;
+            color: #2d3e50;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .result-amount {
+            font-size: 48px;
+            font-weight: 700;
+            color: #2d3e50;
+            margin: 10px 0;
+        }
+        
+        .result-subtitle {
+            font-size: 13px;
+            color: #555;
+            margin-top: 10px;
+        }
+        
+        .info-notes {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .note-item {
+            display: flex;
+            align-items: start;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .note-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .btn-info {
+            width: 100%;
+            padding: 16px;
+            background: #2d3e50;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-info:hover {
+            background: #1a2332;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(45, 62, 80, 0.3);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .result-amount {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge">💰 CALCULADORA - PLAZO FIJO </div>
+        </div>
+        
+    
+        
+        <div class="form-section">
+            <div class="section-title">
+                📊 SIMULACIÓN DE GANANCIA
+            </div>
+            
+            <form id="calcForm">
+                <div class="input-group">
+                    <span class="input-icon">💵</span>
+                    <select id="moneda" disabled>
+                        <option value="GTQ" selected>Quetzales (Q)</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <span class="input-icon">💰</span>
+                    <input type="number" id="monto" placeholder="Ingrese el monto (mínimo Q10,000)" min="10000" step="1000">
+                </div>
+                
+                <div class="input-group">
+                    <span class="input-icon">📅</span>
+                    <select id="plazo">
+                        <option value="">Seleccione el plazo de inversión</option>
+                        <option value="180"> 6 meses</option>
+                        <option value="365"> 1 año</option>
+                        <option value="730"> 2 años</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <span class="input-icon">📈</span>
+                    <input type="text" id="tasa" placeholder="Tasa de interés (%)" readonly>
+                </div>
+                
+                <button type="submit" class="btn-calculate">
+                    <span>🧮</span> CALCULAR GANANCIA
+                </button>
+            </form>
+        </div>
+        
+        <div class="result-section">
+            <div class="result-label">💎 RESULTADO DE LA SIMULACIÓN</div>
+            <div class="result-amount" id="resultado">Q 0.00</div>
+        </div>
+        
+        
+        <div class="info-notes">
+            <div class="note-item">
+                <span>⚠️</span>
+                <span>Tasa puede variar según región</span>
+            </div>
+            <div class="note-item">
+                <span>💵</span>
+                <span>Tasa de interés pago al vencimiento</span>
+            </div>
+            <div class="note-item">
+                <span>📋</span>
+                <span>A todo cálculo se le resta el 10% por el impuesto de Productos Financieros</span>
+            </div>
+        </div>
+
+    </div>
+    
+    <script>
+        function obtenerTasa(plazoDias, monto) {
+            let tasa = 0;
+            if (plazoDias === 180) {
+                if (monto <= 100000) tasa = 6.00;
+                else if (monto <= 250000) tasa = 6.50;
+                else if (monto <= 500000) tasa = 7.00;
+                else tasa = 7.50;
+            } 
+            else if (plazoDias === 365) {
+                if (monto <= 100000) tasa = 6.50;
+                else if (monto <= 250000) tasa = 7.00;
+                else if (monto <= 500000) tasa = 7.50;
+                else tasa = 8.00;
+            } 
+            else if (plazoDias === 730) {
+                if (monto <= 100000) tasa = 7.00;
+                else if (monto <= 250000) tasa = 7.50;
+                else if (monto <= 500000) tasa = 8.00;
+                else tasa = 8.75;
+            }
+            return tasa;
+        }
+        
+        document.getElementById("monto").addEventListener("input", actualizarTasa);
+        document.getElementById("plazo").addEventListener("change", actualizarTasa);
+        
+        function actualizarTasa() {
+            const monto = parseFloat(document.getElementById("monto").value);
+            const plazo = parseFloat(document.getElementById("plazo").value);
+            const tasa = obtenerTasa(plazo, monto);
+            document.getElementById("tasa").value = tasa ? tasa.toFixed(2) + " %" : "";
+        }
+        
+        document.getElementById("calcForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            calcularGanancia();
+        });
+        
+        function calcularGanancia() {
+            const monto = parseFloat(document.getElementById('monto').value);
+            const plazoDias = parseFloat(document.getElementById('plazo').value);
+            const tasaAnual = parseFloat(document.getElementById('tasa').value);
+            
+            if (isNaN(monto) || monto < 10000) {
+                alert("⚠️ Por favor ingrese un monto mínimo de Q10,000");
+                return;
+            }
+            
+            if (isNaN(plazoDias)) {
+                alert("⚠️ Por favor seleccione un plazo de inversión");
+                return;
+            }
+            
+            if (isNaN(tasaAnual)) {
+                alert("⚠️ No se pudo calcular la tasa de interés");
+                return;
+            }
+            
+            const interes = (monto * (tasaAnual / 100) * plazoDias) / 365;
+            const interesNeto = interes * 1; // NO resta el 10% de impuesto (igual a la imagen 1)
+            const total = interesNeto.toFixed(2);
+            
+            document.getElementById('resultado').innerText = "Q " + parseFloat(total).toLocaleString('es-GT', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            
+            // Animación del resultado
+            document.querySelector('.result-section').style.animation = 'none';
+            setTimeout(() => {
+                document.querySelector('.result-section').style.animation = 'pulse 0.5s ease';
+            }, 10);
+        }
+        
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
